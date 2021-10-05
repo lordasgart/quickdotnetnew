@@ -4,15 +4,31 @@ using System.Diagnostics;
 
 Console.WriteLine("Hello, World!");
 
-CreateTempDirectory(@"C:\GIT\internal\Scripts\dotnet");
+string baseDir = @"C:\Temp";
 
-void CreateTempDirectory(string baseDir)
+var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+string codeExe = Path.Combine(appData, @"Programs\Microsoft VS Code\Code.exe");
+
+if (args.Length > 0)
 {
-    var dateTimeFolder = "";
+    baseDir = args[0];
+}
+
+var createdDir = CreateTempDirectory(baseDir);
+
+string CreateTempDirectory(string baseDir)
+{
+    var dateTimeFolder = DryLib.DateTimeHelper.GetDateTimeNowForFilesystem();
     var srcDir = Path.Combine(baseDir, dateTimeFolder, "src/ConsoleApp");
     Directory.CreateDirectory(srcDir);
+    return srcDir;
 }
+
+Directory.SetCurrentDirectory(createdDir);
 
 Process.Start("dotnet", "new console").WaitForExit();
 
+var programcs = Path.Combine(createdDir, "Program.cs");
 
+Process.Start(codeExe, $"{createdDir} {programcs}");

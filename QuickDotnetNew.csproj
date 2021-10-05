@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GIT\github\drylib\DryLib\DryLib.csproj" />
+    <ProjectReference Include="..\drylib\DryLib\DryLib.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
