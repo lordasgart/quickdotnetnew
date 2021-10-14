@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 Console.WriteLine("Hello, World!");
 
@@ -9,6 +10,11 @@ string baseDir = @"C:\Temp";
 var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
 string codeExe = Path.Combine(appData, @"Programs\Microsoft VS Code\Code.exe");
+
+if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+{
+    codeExe = "/usr/bin/code";
+}
 
 if (args.Length > 0)
 {
